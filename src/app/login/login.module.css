@@ -1,0 +1,216 @@
+.login{
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+}
+
+.loginRight{
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topLogo{
+    display: none;
+}
+
+.loginForm{
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 540px;
+
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.headerTitle{
+    color: var(--dark-gray);
+    font-family: var(--font-rubik);
+    font-size: 3.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal; 
+}
+
+.headerLink{
+    display: inline-block;
+    color: var(--dark-gray);
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.headerLink a{
+    text-decoration-line: underline;
+}
+
+.checkBox{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkBox input{
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    -webkit-tap-highlight-color: transparent;
+    accent-color: var(--dark-gray);
+}
+
+.checkBox label{
+    color: var(--dark-gray);
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.checkBox label span{
+    text-decoration-line: underline;
+}
+
+.loginButton{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: var(--dark-gray);
+}
+
+.loginButton p{
+    color: var(--white);
+    font-family: var(--font-rubik);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+}
+
+.loginButton img{
+    width: 16px;
+    height: 16px;  
+}
+
+.terms{
+    color: var(--dark-gray);
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.terms span{
+    text-decoration-line: underline;
+}
+
+.loginLeft{
+    flex: 1;
+
+    position: relative;
+    height: 100vh;
+}
+
+.logo{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 248px;
+    height: 62px;
+}
+
+@media screen and (max-width: 1536px) {
+
+    .loginForm{
+        max-width: 500px;
+    }
+
+}
+
+@media screen and (max-width: 1280px) {
+
+    .loginForm{
+        max-width: 400px;
+    }
+ 
+}
+
+@media screen and (max-width: 1024px){
+
+    .loginForm{
+        max-width: 320px;
+    }
+
+}
+
+@media screen and (max-width: 768px){
+    
+    .headerTitle{
+        font-size: 3.2rem;
+    }
+
+    .loginLeft{
+        display: none;
+    }
+
+    .login{
+        justify-content: center;
+    }
+
+    .loginForm{
+        max-width: 500px;
+    }
+
+    .topLogo{
+        display: block;
+        position: absolute;
+        top: 60px;
+        width: 160px;
+        aspect-ratio: 16/4;
+    }
+
+}
+
+@media screen and (max-width: 568px){
+
+    .headerTitle{
+        font-size: 2.8rem;
+    }
+
+    .loginForm{
+        max-width: 400px;
+    }
+
+}
+
+@media screen and (max-width: 480px){
+
+    .headerTitle{
+        font-size: 2.4rem;
+    }
+
+    .loginForm{
+        max-width: 320px;
+    }
+
+}
