@@ -56,3 +56,12 @@ input {
 }
 
 input::placeholder { font: inherit; }
+
+.recharts-cartesian-axis-tick {    
+  color: black;
+  font-family: var(--font-inter);
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20.87px; /* 129.412% */
+}

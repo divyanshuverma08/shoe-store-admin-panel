@@ -1,0 +1,85 @@
+.card{
+    flex-grow: 1;
+    padding: 24px 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    border-radius: 16px;
+    background: var(--fa--white);
+}
+
+.title{
+    color: #000;
+    font-family: var(--font-rubik);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.leftContainer{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.iconConatiner{
+    padding: 10px;
+
+    border-radius: 8px;
+    background: var(--Blue, #4A69E2);
+}
+
+.amount{
+    color: #000;
+    font-family: var(--font-rubik);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.rightContainer{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.percentage{
+    color: #000;
+    font-family: var(--font-open-sans);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.subText{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.subText p{
+    color: #000;
+    text-align: right;
+    font-family: var(--font-open-sans);
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    opacity: 0.7;
+}

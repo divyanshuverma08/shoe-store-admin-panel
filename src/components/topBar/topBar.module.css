@@ -1,0 +1,46 @@
+.topBar{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.left h1{
+    color: #000;
+    font-family: var(--font-rubik);
+    font-size: 2.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.pageList{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageList div{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pageList p{
+    color: #000;
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    opacity: 0.8;
+}

@@ -1,0 +1,245 @@
+.container{
+    margin-top: 24px;
+
+    display: flex;
+    gap: 47px;
+
+    padding: 24px;
+
+    border-radius: 16px;
+    background: var(--white);
+}
+
+.containerLeft{
+    flex: 1.2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.inputSection{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.inputSectionFlex{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: space-between;
+}
+
+.inputSectionFlexContainer{
+    width: 49%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.inputTitle{
+    color: var(--dark-gray);
+    font-family: var(--font-rubik);
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.inputSelect{
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--dark-gray);
+    height: 48px;
+    padding: 10px 16px;
+    appearance: none; 
+    cursor: pointer;
+    background-color: transparent;
+
+    
+    color: var(--dark-gray);
+    font-family: var(--font-inter);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.5px;
+}
+  
+.inputSelect::-ms-expand{
+    display: none;
+}
+  
+.inputSelect option {
+    padding: 10px 16px;
+}
+
+.inputSelect option:first-child{
+    display: none;
+}
+
+.sizesInput{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sizesInputContainer{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.containerRight{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.productImage{
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+.productImage img{
+    width: 100%;
+    object-fit: cover;
+}
+
+.uploadImageContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.uploadBox{
+    width: 100%;
+    aspect-ratio: 425/132;
+
+    position: relative;
+    display: inline-block;
+
+    border-radius: 8px;
+    border: 1px dashed var(--dark-gray);
+
+    padding: 16px;
+}
+
+.uploadBoxContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.uploadBoxContent svg{
+    width: 64px;
+    height: 64px;
+}
+
+.text{
+    text-align: center;
+
+    color: var(--gray-main);
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.fileInput {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+}
+
+.uploads{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.imageUploads{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--fa--white);
+}
+
+.file{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.fileProgress{
+    width: 100%;
+    height: 4px;
+
+    border-radius: 8px;
+    background: #4A69E2;
+}
+
+.fileName{
+    color: var(--dark-gray);
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.actionButtons{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.button{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 8px 16px; 
+
+    border-radius: 8px;
+
+    color: var(--white);
+    font-family: var(--font-rubik);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+}
+
+.button.update{
+    background: var(--dark-gray);
+}
+
+.button.delete{
+    background: #D00000;
+}
+
+.button.cancel{
+    color: var(--dark-gray);
+    border: 1px solid var(--dark-gray);
+}

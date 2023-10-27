@@ -1,0 +1,72 @@
+.graph{
+    flex: 2;
+
+    padding: 24px 16px;
+
+    border-radius: 16px;
+    background-color: var(--fa--white);
+
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #232321;
+}
+
+.title{
+    color: #000;
+    font-family: var(--font-rubik);
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.tabs{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.tab{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 32px;
+    padding: 8px 16px;
+
+    border-radius: 8px;
+    border: 1px solid var(--dark-gray);
+}
+
+.tab p{
+    color: var(--dark-gray);
+    font-family: var(--font-inter);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+}
+
+.tab.selected{
+    background: #151514;
+}
+
+.tab.selected p{
+    color: var(--white);
+}
+
+.chart{
+    width: 100%;
+}

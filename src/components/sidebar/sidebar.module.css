@@ -1,0 +1,80 @@
+.sidebar{
+    flex: 1;
+
+    min-height: 100vh;
+
+    border-right: 1px solid rgba(35, 35, 33, 0.20);
+    background: var(--fa--white);
+}
+
+.logoContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 32px 70px;
+}
+
+.logo{
+    position: relative;
+    width: 128px;
+    height: 32px;
+}
+
+.logo img{
+    width: 100%;
+    object-fit: cover;
+}
+
+.mainContainer{
+    padding: 10px 24px;
+}
+
+.tabs{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+
+    list-style: none;
+}
+
+.tab{
+    width: 100%;
+    display: flex;
+    height: 48px;
+    padding: 8px 16px;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 8px;
+}
+
+.tab.active{
+    background: var(--Blue, #4A69E2);
+}
+
+.tab p{
+    color: var(--dark-gray);
+    font-family: var(--font-rubik);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+}
+
+.tab svg{
+    width: 16px;
+    height: 16px;
+}
+
+.tab.active svg path{
+    stroke: white;
+}
+
+.tab.active p{
+    color: var(--white);
+}
