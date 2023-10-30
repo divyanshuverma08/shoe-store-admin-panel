@@ -2,36 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import styles from "../products.module.css";
 
-function Pagination({ params, hasPrev, hasNext, totalPages }) {
-  const router = useRouter();
-  const page = parseInt(params.page) || 1;
-
-  const handleScroll = () => {
-    const targetId = "titleBar";
-    const elem = document.getElementById(targetId);
-    elem?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleNext = () => {
-    const query = new URLSearchParams({ ...params, page: page + 1 });
-    router.push(`/products?` + query,{scroll: false});
-    handleScroll()
-  };
-
-  const handlePrev = () => {
-    const query = new URLSearchParams({ ...params, page: page - 1 });
-    router.push(`/products?` + query,{scroll: false});
-    handleScroll()
-  };
-
-  const handleToNumber = (pageNumber) => {
-    const query = new URLSearchParams({ ...params, page: pageNumber });
-    router.push(`/products?` + query,{scroll: false});
-    handleScroll()
-  };
+function Pagination({ currentPage, hasPrev, hasNext, totalPages,url,handleNext,handlePrev,handleToNumber }) {
+  const page = currentPage || 1;
 
   let pageNumbers = [];
 
@@ -54,7 +28,7 @@ function Pagination({ params, hasPrev, hasNext, totalPages }) {
         />
         <span>Previous</span>
       </button>
-      {(page === totalPages && totalPages !== 1) && (
+      {(page === totalPages && totalPages > 2) && (
         <>
           <button className={styles.btn} onClick={() => handleToNumber(1)}>
             <span>1</span>

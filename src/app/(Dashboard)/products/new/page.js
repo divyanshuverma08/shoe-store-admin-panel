@@ -11,9 +11,9 @@ import { products } from "@/lib/services/products";
 import { useRouter } from "next/navigation";
 import { environment } from "@/lib/environment";
 
-export default function Product({params}) {
+export default function NewProduct() {
   const router = useRouter();
-  
+
   const [categories, setCategories] = useState(null);
 
   const [value, setValue] = useState({
@@ -46,21 +46,15 @@ export default function Product({params}) {
 
   useEffect(() => {
     getCategories();
-    getProduct();
   }, []);
 
   const uploadImages = async (file) => {
     if (!file) {
       return null;
     }
-
-    if(!file.local){
-      return file.url;
-    }
-
     try {
       const data = new FormData();
-      data.append("file", file.file);
+      data.append("file", file);
       data.append(
         "upload_preset",
         `${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}`
@@ -78,36 +72,6 @@ export default function Product({params}) {
       return image.url;
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const getProduct = async () => {
-    try {
-      const response = await products.getProductById({id: params.slug ,auth: true });
-
-      setValue({
-        model: response.data?.model,
-        category: response.data?.category._id,
-        color: response.data?.color,
-        price: response.data?.price,
-        gender: response.data?.gender,
-        newRealease: response.data?.newRealease
-      });
-
-      setSizes(response.data?.sizes);
-
-      let listFiles = [];
-
-      await Promise.all(response.data?.images.map(async (image)=>{
-        listFiles.push({local: false,url: image.imageUrl})
-      }));
-
-      setFiles(listFiles);
-
-    } catch (error) {
-      if (error.response?.data) {
-        console.log(error.response.data);
-      }
     }
   };
 
@@ -139,14 +103,13 @@ export default function Product({params}) {
       return;
     }
     let list = [...files];
-    list.push({local: true ,file: e.target.files[0]});
+    list.push(e.target.files[0]);
     setFiles(list);
   };
 
   const handleSubmit = async () => {
-
     if(environment.ALOW_CHANGE){
-      toast.error("Only owner of site has authorization to update product");
+      toast.error("Only owner of site has authorization to add product");
       return;
     }
 
@@ -183,7 +146,7 @@ export default function Product({params}) {
     }));
 
     try {
-      const response = await products.updateProduct({id: params.slug,data:{
+      const response = await products.addProduct({data:{
         model: model,
         category: category,
         color: color,
@@ -195,7 +158,7 @@ export default function Product({params}) {
       },auth:true});
       toast.dismiss(toastId);
 
-      toast.success("Product has been update", { duration: 2000 });
+      toast.success("Product has been created", { duration: 2000 });
       router.push(`/products/${response.data._id}`);
     } catch (error) {
       toast.dismiss(toastId);
@@ -389,7 +352,7 @@ export default function Product({params}) {
         <div className={styles.containerRight}>
           <div className={styles.productImage}>
             {files.length > 0 ? (
-              <Image src={files[0].local ? URL.createObjectURL(files[0].file) : files[0].url} alt="product" fill />
+              <Image src={URL.createObjectURL(files[0])} alt="product" fill />
             ) : (
               <p className={styles.withoutImage}>Upload Photos</p>
             )}
@@ -427,7 +390,7 @@ export default function Product({params}) {
             {files.map((image, i) => (
               <div key={i} className={styles.imageUploads}>
                 <Image
-                  src={image.local ? URL.createObjectURL(image.file) : image.url}
+                  src={URL.createObjectURL(image)}
                   alt="product"
                   width={64}
                   height={64}
@@ -458,7 +421,7 @@ export default function Product({params}) {
               className={`${styles.button} ${styles.update}`}
               onClick={handleSubmit}
             >
-              Update
+              Save
             </button>
             <button className={`${styles.button} ${styles.cancel}`}>
               Cancel

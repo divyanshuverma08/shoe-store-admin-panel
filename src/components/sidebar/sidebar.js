@@ -1,8 +1,25 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./sidebar.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
+  const router = useRouter();
+
+  const [route,setRoute] = useState("");
+  
+  useEffect(()=>{
+    const path = window.location.pathname;
+    setRoute(path.split("/").at(-1));
+  },[]);
+
+  const handleNavigation = (path) => {
+    router.push(path);
+    setRoute(path.split("/").at(-1));
+  }
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.logoContainer}>
@@ -12,7 +29,7 @@ export default function Sidebar() {
       </div>
       <div className={styles.mainContainer}>
         <ul className={styles.tabs}>
-          <li className={`${styles.tab}`}>
+          <li className={`${styles.tab} ${route === '' && styles.active}`} onClick={()=>handleNavigation("/")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -28,7 +45,7 @@ export default function Sidebar() {
             </svg>
             <p>Dashboard</p>
           </li>
-          <li className={`${styles.tab} ${styles.active}`}>
+          <li className={`${styles.tab} ${route === 'products' && styles.active}`} onClick={()=>handleNavigation("/products")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -53,7 +70,7 @@ export default function Sidebar() {
             </svg>
             <p>All Products</p>
           </li>
-          <li className={`${styles.tab} ${styles.active}`}>
+          <li className={`${styles.tab} ${route === 'orders' && styles.active}`} onClick={()=>handleNavigation("/orders")}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

@@ -1,4 +1,4 @@
-.table{
+.ordersTable{
     padding: 24px 16px;
 
     border-radius: 16px;
@@ -23,10 +23,14 @@
 
 .table{
     width: 100%;
+    border-spacing: 0;
+}
+
+.table tr{
+    cursor: pointer;
 }
 
 .tableHeader{
-    width: 14%;
     color: rgba(35, 35, 33, 0.80);
 
     font-family: var(--font-rubik);
@@ -43,7 +47,6 @@
 
 .tableHeader:first-child{
     text-align: left;
-    width: 30%;
 }
 
 .tableHeader:last-child{

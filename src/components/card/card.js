@@ -17,7 +17,7 @@ export default function Card({ title, amount, percentage }) {
                 height={20}
               />
             </div>
-            <p className={styles.amount}>{`₹${amount}`}</p>
+            <p className={styles.amount}>{`${amount}`}</p>
           </div>
           <div className={styles.rightContainer}>
             <Image

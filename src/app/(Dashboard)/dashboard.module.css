@@ -6,6 +6,21 @@
 
 .section{
     display: flex;
-    align-items: center;
+    align-items:flex-start;
     gap: 14px;
+}
+
+.date{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date p{
+    color: #000;
+    font-family: var(--font-open-sans);
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }

@@ -1,10 +1,75 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import styles from "./order.module.css";
 import Image from "next/image";
 import TopBar from "@/components/topBar/topBar";
 import OrderTable from "./components/orderTable";
+import { order } from "@/lib/services/order";
+import toast from "react-hot-toast";
 
-export default function Order() {
+export default function Order({ params }) {
+
+  const [data, setData] = useState(null);
+
+  const [orderStatus, setOrderStatus] = useState("default");
+  const [paymentStatus, setPaymentStatus] = useState("default");
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
+  async function getOrder() {
+    try {
+      const response = await order.getOrderById({
+        id: params.slug,
+        auth: true,
+      });
+
+      if (response) {
+        setData(response.data);
+        setOrderStatus(response.data?.status);
+        setPaymentStatus(response.data?.paymentStatus);
+      }
+    } catch (error) {
+      if (error.response?.data) {
+        console.log(error.response.data);
+      }
+    }
+  }
+
+  const handleSubmit = async () => {
+    const toastId = toast.loading("Loading...", { position: "top-right" });
+
+    try {
+      const response = await order.updateOrderStatus({
+        id: params.slug,
+        data: {
+          status: orderStatus,
+        },
+        auth: true,
+      });
+
+      await order.updatePaymentStatus({
+        id: params.slug,
+        data: {
+          paymentStatus: paymentStatus,
+        },
+        auth: true,
+      });
+
+      await getOrder();
+
+      toast.dismiss(toastId);
+
+      toast.success("Order has been updated", { duration: 2000 });
+    } catch (error) {
+      toast.dismiss(toastId);
+      const err = error.response?.data?.message || "Something went wrong...";
+      toast.error(err);
+    }
+  };
+
   return (
     <div className={styles.order}>
       <TopBar
@@ -14,27 +79,59 @@ export default function Order() {
       <div className={styles.orderDetails}>
         <div className={styles.header}>
           <div className={styles.title}>
-            <div className={styles.orderId}>Orders ID: #6743</div>
-            <div className={styles.status}>Pending</div>
+            <div className={styles.orderId}>Orders ID: {data?._id}</div>
+            <div className={`${styles.status} ${data?.status === "Delivered" && styles.delivered}`}>{data?.status}</div>
           </div>
           <div className={styles.bar}>
             <div className={styles.date}>
               <Image src="/calendar.svg" width={24} height={24} alt="date" />
-              <p>Feb 16,2022</p>
+              <p>
+                {data?.createdAt &&
+                  new Date(data?.createdAt).toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+              </p>
             </div>
             <div className={styles.actions}>
-              <select
-                name={"status"}
-                className={styles.inputSelect}
-                id="status"
-              >
-                <option disabled value="default">
-                  status
-                </option>
-                <option value="Complete">Complete</option>
-                <option value="Delivery">Delivery</option>
-              </select>
-              <div className={styles.saveButton}>Save</div>
+              <div className={styles.action}>
+                <label>Payment Status</label>
+                <select
+                  name="paymentStatus"
+                  value={paymentStatus}
+                  onChange={(e) => setPaymentStatus(e.target.value)}
+                  className={styles.inputSelect}
+                >
+                  <option disabled value="default">
+                    Payment
+                  </option>
+                  <option value="Pending">Pending</option>
+                  <option value="Failed">Failed</option>
+                  <option value="Complete">Complete</option>
+                </select>
+              </div>
+              <div className={styles.action}>
+                <label>Order Status</label>
+                <select
+                  name="orderStatus"
+                  value={orderStatus}
+                  onChange={(e) => setOrderStatus(e.target.value)}
+                  className={styles.inputSelect}
+                >
+                  <option disabled value="default">
+                    Order
+                  </option>
+                  <option value="Processing">Processing</option>
+                  <option value="Packed">Packed</option>
+                  <option value="Transit">Transit</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Canceled">Canceled</option>
+                </select>
+              </div>
+              <div className={styles.saveButton} onClick={handleSubmit}>
+                Save
+              </div>
             </div>
           </div>
         </div>
@@ -65,9 +162,11 @@ export default function Order() {
             </div>
             <div className={styles.cardDetails}>
               <p className={styles.cardTitle}>Customer</p>
-              <p className={styles.cardCotent}>Full Name: Jane Cooper</p>
-              <p className={styles.cardCotent}>Email: janecooper@gmail.com</p>
-              <p className={styles.cardCotent}>Phone: +900 231 1212</p>
+              <p className={styles.cardCotent}>
+                Full Name: {data?.firstName} {data?.lastName}
+              </p>
+              <p className={styles.cardCotent}>Email: {data?.email}</p>
+              <p className={styles.cardCotent}>Phone: {data?.phoneNumber}</p>
             </div>
           </div>
           <div className={styles.infoCard}>
@@ -97,9 +196,9 @@ export default function Order() {
             </div>
             <div className={styles.cardDetails}>
               <p className={styles.cardTitle}>Order Info</p>
-              <p className={styles.cardCotent}>Shipping: Next express</p>
-              <p className={styles.cardCotent}>Payment Method: Paypal</p>
-              <p className={styles.cardCotent}>Status: Pending</p>
+              <p className={styles.cardCotent}>Shipping: Kicks express</p>
+              <p className={styles.cardCotent}>Payment Method: Stripe</p>
+              <p className={styles.cardCotent}>Status: {data?.paymentStatus}</p>
             </div>
           </div>
           <div className={styles.infoCard}>
@@ -130,13 +229,16 @@ export default function Order() {
             <div className={styles.cardDetails}>
               <p className={styles.cardTitle}>Deliver to</p>
               <p className={styles.cardCotent}>
-                Address: Santa Ana, illinois 85342 2345 Westheimer Rd. Block 9A
+                Address: {data?.deliveryAddress}
               </p>
+              <p className={styles.cardCotent}>City: {data?.city}</p>
+              <p className={styles.cardCotent}>State: {data?.state}</p>
+              <p className={styles.cardCotent}>PIN: {data?.pincode}</p>
             </div>
           </div>
         </div>
       </div>
-      <OrderTable />
+      {data && <OrderTable data={data} />}
     </div>
   );
 }

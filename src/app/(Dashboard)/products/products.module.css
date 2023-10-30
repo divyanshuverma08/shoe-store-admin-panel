@@ -58,6 +58,8 @@
     padding: 16px;
     border-radius: 16px;
     background: var(--fa--white);
+
+    cursor: pointer;
 }
 
 .productDetails{
@@ -91,12 +93,14 @@
 .title{
     color: var(--dark-gray);
     font-size: 1.6rem;
+    text-transform: capitalize;
 }
 
 .category{
     color: #000;
     font-size: 1.4rem;
     opacity: 0.6;
+    text-transform: capitalize;
 }
 
 .containerBottom{

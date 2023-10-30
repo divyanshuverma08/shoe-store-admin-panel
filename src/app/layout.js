@@ -1,5 +1,7 @@
-import './globals.css'
+import Providers from "@/providers/providers";
+import "./globals.css";
 import { Rubik, Open_Sans, Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const rubik = Rubik({
   weight: ["400", "600"],
@@ -23,14 +25,27 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'Kicks Admin Panel',
-  description: 'Kicks eCommerce admin panal',
-}
+  title: "Kicks Admin Panel",
+  description: "Kicks eCommerce admin panal",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${rubik.variable} ${openSans.variable} ${inter.variable}`}>{children}</body>
+      <body
+        className={`${rubik.variable} ${openSans.variable} ${inter.variable}`}
+      >
+        <Toaster
+          toastOptions={{
+            style: {
+              fontFamily: "'Rubik', sans-serif",
+              fontWeight: "bold",
+              fontSize: "16px",
+            },
+          }}
+        />
+        <Providers>{children}</Providers>
+      </body>
     </html>
-  )
+  );
 }

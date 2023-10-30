@@ -44,6 +44,11 @@
     line-height: normal;
 }
 
+.status.delivered{
+    color: var(--white);
+    background: var(--blue);
+}
+
 .orderId{
     color: var(--dark-gray);
     font-family: var(--font-rubik);
@@ -78,6 +83,22 @@
     display: flex;
     align-items: center;
     gap: 20px;
+}
+
+.action{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.action label{
+    color: var(--dark-gray);
+    font-family: var(--font-open-sans);
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
 .inputSelect{
@@ -128,6 +149,8 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+
+    cursor: pointer;
 }
 
 .information{
@@ -214,6 +237,7 @@
 
 .table{
     width: 100%;
+    border-spacing: 0;
 }
 
 .tableHeader{

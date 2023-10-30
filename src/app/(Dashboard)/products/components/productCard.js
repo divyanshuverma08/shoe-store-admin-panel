@@ -1,19 +1,24 @@
+"use client"
+
 import React from "react";
 import Image from "next/image";
 import styles from "../products.module.css";
+import { useRouter } from "next/navigation";
 
-export default function ProductCard() {
+export default function ProductCard({model,category,price,stock,slug,totalSold}) {
+  const router = useRouter();
+
   return (
-    <div className={styles.productCardContainer}>
+    <div className={styles.productCardContainer} onClick={()=>router.push(`/products/${slug}`)}>
       <div className={styles.productCard}>
         <div className={styles.productDetails}>
           <Image src="/product.png" alt="product" width={84} height={84} />
           <div className={styles.detailContainer}>
             <div className={styles.containerTop}>
-              <p className={styles.title}>Adidas Ultra boost</p>
-              <p className={styles.category}>Sneaker</p>
+              <p className={styles.title}>{model}</p>
+              <p className={styles.category}>{category}</p>
             </div>
-            <div className={styles.containerBottom}>$110.40</div>
+            <div className={styles.containerBottom}>₹{price}</div>
           </div>
         </div>
         <div className={styles.productSales}>
@@ -35,7 +40,7 @@ export default function ProductCard() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p>1269</p>
+              <p>{totalSold}</p>
             </div>
           </div>
           <div className={styles.sectionSeparator}></div>
@@ -52,7 +57,7 @@ export default function ProductCard() {
                 <rect y="0.5" width="52" height="4" rx="2" fill="#E7E7E3" />
                 <rect y="0.5" width="30" height="4" rx="2" fill="#FFA52F" />
               </svg>
-              <p>1269</p>
+              <p>{stock}</p>
             </div>
           </div>
         </div>

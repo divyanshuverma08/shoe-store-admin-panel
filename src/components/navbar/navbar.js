@@ -3,8 +3,13 @@
 import React, { useState } from "react";
 import styles from "./navbar.module.css";
 import ClickAwayListener from "react-click-away-listener";
+import { logout } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,7 +40,11 @@ export default function Navbar() {
             <p className={styles.title}>Admin</p>
             <div
               className={styles.actions}
-              onClick={() => console.log("fadsf")}
+              onClick={() => {
+                dispatch(logout())
+                localStorage.setItem("user",null);
+                router.push("/login");
+              }}
             >
               <p>Log out</p>
               <svg

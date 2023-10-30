@@ -1,10 +1,54 @@
-import React from "react";
+"use client";
+
+import React, {useState, useEffect} from "react";
 import styles from "./products.module.css";
 import TopBar from "@/components/topBar/topBar";
 import ProductCard from "./components/productCard";
 import Pagination from "./components/pagination";
+import { products } from "@/lib/services/products";
+import Link from "next/link";
 
-export default function Products({searchParams}) {
+export default function Products() {
+  const [data, setData] = useState(null);
+  const [metadata, setMetadata] = useState(null);
+
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    getProducts({ page: page });
+  }, [page]);
+
+  async function getProducts(params) {
+    const query = new URLSearchParams({ ...params });
+
+    try {
+      const response = await products.getProductsWithFiltersAndPagination({
+        query,
+        auth: true,
+      });
+
+      if (response) {
+        setData(response.data);
+        setMetadata(response.metadata);
+      }
+    } catch (error) {
+      if (error.response?.data) {
+        console.log(error.response.data);
+      }
+    }
+  }
+
+  const handleNext = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    setPage(page - 1);
+  };
+
+  const handleToNumber = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   return (
     <div className={styles.products}>
@@ -12,7 +56,7 @@ export default function Products({searchParams}) {
         page={"All Products"}
         pageList={["Home", "All Products"]}
         component={
-          <button className={styles.addButton}>
+          <Link href="/products/new" className={styles.addButton}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -36,19 +80,32 @@ export default function Products({searchParams}) {
               />
             </svg>
             <p>ADD NEW PRODUCT</p>
-          </button>
+          </Link>
         }
       />
       <div className={styles.productList}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {data?.map((product, i) => (
+          <ProductCard
+            key={product._id}
+            slug={product._id}
+            model={product.model}
+            category={product.category.name}
+            price={product.price}
+            stock={product.stock}
+            totalSold={product.totalSold}
+          />
+        ))}
       </div>
-      <Pagination params={searchParams} />
+      {metadata && <Pagination
+        url={"products"}
+        currentPage={page}
+        hasNext={metadata?.hasNextPage}
+        hasPrev={metadata?.hasPreviousPage}
+        totalPages={metadata?.totalPages}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+        handleToNumber={handleToNumber}
+      />}
     </div>
   );
 }
