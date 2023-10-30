@@ -5,14 +5,14 @@ import Image from "next/image";
 import styles from "../products.module.css";
 import { useRouter } from "next/navigation";
 
-export default function ProductCard({model,category,price,stock,slug,totalSold}) {
+export default function ProductCard({model,category,price,stock,slug,totalSold,image}) {
   const router = useRouter();
 
   return (
     <div className={styles.productCardContainer} onClick={()=>router.push(`/products/${slug}`)}>
       <div className={styles.productCard}>
         <div className={styles.productDetails}>
-          <Image src="/product.png" alt="product" width={84} height={84} />
+          <Image src={image} alt="product" width={84} height={84} />
           <div className={styles.detailContainer}>
             <div className={styles.containerTop}>
               <p className={styles.title}>{model}</p>

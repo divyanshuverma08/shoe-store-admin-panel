@@ -24,12 +24,12 @@ export default function OrderTable({data}) {
                   <input type="checkbox" name="" id="" />
                 </div>
                 <Image
-                  src="/product.png"
+                  src={item.product.images[0].imageUrl}
                   width={60}
                   height={60}
                   alt="product"
                 />
-                {item.model}
+                {item.product.model}
               </div>
             </td>
             <td className={styles.tableData}>{item.product._id}</td>

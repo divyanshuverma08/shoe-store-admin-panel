@@ -93,6 +93,7 @@ export default function Products() {
             price={product.price}
             stock={product.stock}
             totalSold={product.totalSold}
+            image={product.images[0].imageUrl}
           />
         ))}
       </div>

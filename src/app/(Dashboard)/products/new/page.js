@@ -108,7 +108,7 @@ export default function NewProduct() {
   };
 
   const handleSubmit = async () => {
-    if(environment.ALOW_CHANGE){
+    if(!environment.ALOW_CHANGE){
       toast.error("Only owner of site has authorization to add product");
       return;
     }
@@ -144,6 +144,8 @@ export default function NewProduct() {
       const imageUrl = await uploadImages(file);
       images.push({imageUrl: imageUrl});
     }));
+
+    images.reverse();
 
     try {
       const response = await products.addProduct({data:{

@@ -19,7 +19,7 @@ export default function BestSeller({ data }) {
             <div key={item._id} className={styles.box} onClick={()=>router.push(`/products/${item._id}`)}>
               <div className={styles.productDesc}>
                 <Image
-                  src="/product.png"
+                  src={item.images[0].imageUrl}
                   width={64}
                   height={64}
                   alt="product"
