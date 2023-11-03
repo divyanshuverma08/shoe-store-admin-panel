@@ -24,3 +24,19 @@
     font-weight: 600;
     line-height: normal;
 }
+
+@media screen and (max-width: 1024px) {
+
+    .dashboard .section:nth-of-type(2){
+        flex-direction: column;
+    }
+    
+}
+
+@media screen and (max-width: 568px) {
+
+    .section{
+        flex-direction: column;
+    }
+    
+}

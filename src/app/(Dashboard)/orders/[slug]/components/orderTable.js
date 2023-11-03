@@ -1,10 +1,29 @@
-import React from "react";
+"use client"
+
+import React, {useEffect} from "react";
 import styles from "../order.module.css";
 import Image from "next/image";
 
 export default function OrderTable({data}) {
+
+  useEffect(()=>{
+    const setMobileTable = function(selector) {
+      if (window.innerWidth > 1024) return false;
+      const tableEl = selector;
+      const thEls = document.getElementsByClassName(`${styles.tableHeader}`);
+      const tdLabels = Array.from(thEls).map(el => el.innerText);
+      tableEl.querySelectorAll('tbody tr').forEach( tr => {
+        Array.from(tr.children).forEach( 
+          (td, ndx) =>  td.setAttribute('label', tdLabels[ndx])
+        );
+      });
+    }
+
+    setMobileTable(document.getElementById("productTable"))
+  },[])
+
   return (
-    <div className={styles.orderTable}>
+    <div id="productTable" className={styles.orderTable}>
       <div className={styles.header}>
         <p className={styles.title}>Products</p>
       </div>

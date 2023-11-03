@@ -11,9 +11,9 @@ import { products } from "@/lib/services/products";
 import { useRouter } from "next/navigation";
 import { environment } from "@/lib/environment";
 
-export default function Product({params}) {
+export default function Product({ params }) {
   const router = useRouter();
-  
+
   const [categories, setCategories] = useState(null);
 
   const [value, setValue] = useState({
@@ -45,8 +45,14 @@ export default function Product({params}) {
   };
 
   useEffect(() => {
-    getCategories();
-    getProduct();
+    async function fetchData() {
+      const toastId = toast.loading("Loading");
+      await getCategories();
+      await getProduct();
+      toast.dismiss(toastId);
+    }
+
+    fetchData();
   }, []);
 
   const uploadImages = async (file) => {
@@ -54,7 +60,7 @@ export default function Product({params}) {
       return null;
     }
 
-    if(!file.local){
+    if (!file.local) {
       return file.url;
     }
 
@@ -83,7 +89,10 @@ export default function Product({params}) {
 
   const getProduct = async () => {
     try {
-      const response = await products.getProductById({id: params.slug ,auth: true });
+      const response = await products.getProductById({
+        id: params.slug,
+        auth: true,
+      });
 
       setValue({
         model: response.data?.model,
@@ -91,19 +100,20 @@ export default function Product({params}) {
         color: response.data?.color,
         price: response.data?.price,
         gender: response.data?.gender,
-        newRealease: response.data?.newRealease
+        newRealease: response.data?.newRealease,
       });
 
       setSizes(response.data?.sizes);
 
       let listFiles = [];
 
-      await Promise.all(response.data?.images.map(async (image)=>{
-        listFiles.push({local: false,url: image.imageUrl})
-      }));
+      await Promise.all(
+        response.data?.images.map(async (image) => {
+          listFiles.push({ local: false, url: image.imageUrl });
+        })
+      );
 
       setFiles(listFiles);
-
     } catch (error) {
       if (error.response?.data) {
         console.log(error.response.data);
@@ -134,18 +144,17 @@ export default function Product({params}) {
   };
 
   const handleFileChange = (e) => {
-    if(files.length >= 4){
-      toast.error("Only 4 photos are allowed")
+    if (files.length >= 4) {
+      toast.error("Only 4 photos are allowed");
       return;
     }
     let list = [...files];
-    list.push({local: true ,file: e.target.files[0]});
+    list.push({ local: true, file: e.target.files[0] });
     setFiles(list);
   };
 
   const handleSubmit = async () => {
-
-    if(!environment.ALOW_CHANGE){
+    if (!environment.ALOW_CHANGE) {
       toast.error("Only owner of site has authorization to update product");
       return;
     }
@@ -167,7 +176,6 @@ export default function Product({params}) {
       return;
     }
 
-
     if (files.length < 1) {
       toast.error("At least one image is madatory");
       return;
@@ -177,22 +185,26 @@ export default function Product({params}) {
 
     let images = [];
 
-    for(var i = 0; i  < files.length; i++){
+    for (var i = 0; i < files.length; i++) {
       const imageUrl = await uploadImages(files[i]);
-      images.push({imageUrl: imageUrl});
+      images.push({ imageUrl: imageUrl });
     }
 
     try {
-      const response = await products.updateProduct({id: params.slug,data:{
-        model: model,
-        category: category,
-        color: color,
-        price: parseInt(price),
-        sizes: sizes,
-        newRelease: newRealease,
-        gender: gender,
-        images: images
-      },auth:true});
+      const response = await products.updateProduct({
+        id: params.slug,
+        data: {
+          model: model,
+          category: category,
+          color: color,
+          price: parseInt(price),
+          sizes: sizes,
+          newRelease: newRealease,
+          gender: gender,
+          images: images,
+        },
+        auth: true,
+      });
       toast.dismiss(toastId);
 
       toast.success("Product has been update", { duration: 2000 });
@@ -389,7 +401,15 @@ export default function Product({params}) {
         <div className={styles.containerRight}>
           <div className={styles.productImage}>
             {files.length > 0 ? (
-              <Image src={files[0].local ? URL.createObjectURL(files[0].file) : files[0].url} alt="product" fill />
+              <Image
+                src={
+                  files[0].local
+                    ? URL.createObjectURL(files[0].file)
+                    : files[0].url
+                }
+                alt="product"
+                fill
+              />
             ) : (
               <p className={styles.withoutImage}>Upload Photos</p>
             )}
@@ -427,13 +447,17 @@ export default function Product({params}) {
             {files.map((image, i) => (
               <div key={i} className={styles.imageUploads}>
                 <Image
-                  src={image.local ? URL.createObjectURL(image.file) : image.url}
+                  src={
+                    image.local ? URL.createObjectURL(image.file) : image.url
+                  }
                   alt="product"
                   width={64}
                   height={64}
                 />
                 <div className={styles.file}>
-                  <p className={styles.fileName}>{`${value.model}${i + 1}.png`}</p>
+                  <p className={styles.fileName}>{`${value.model}${
+                    i + 1
+                  }.png`}</p>
                   <div className={styles.fileProgress}></div>
                 </div>
                 <svg

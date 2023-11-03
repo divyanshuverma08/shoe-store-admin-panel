@@ -9,6 +9,7 @@ import BestSeller from "@/components/bestSeller/bestSeller";
 import OrdersTable from "@/components/datatables/ordersTable";
 import { order } from "@/lib/services/order";
 import { dashboard } from "@/lib/services/dashboard";
+import Loader from "@/components/loader/loader";
 import Image from "next/image";
 
 export default function Dashboard() {
@@ -78,30 +79,38 @@ export default function Dashboard() {
           </div>
         }
       />
-      <section className={styles.section}>
-        <Card
-          title={"Total Orders"}
-          amount={dashboardData?.totalOrders.amount}
-          percentage={dashboardData?.totalOrders.percentage}
-        />
-        <Card
-          title={"Pending Orders"}
-          amount={dashboardData?.pendingOrders.amount}
-          percentage={dashboardData?.pendingOrders.percentage}
-        />
-        <Card
-          title={"Shipped Orders"}
-          amount={dashboardData?.shippedOrders.amount}
-          percentage={dashboardData?.shippedOrders.percentage}
-        />
-      </section>
-      <section className={styles.section}>
-        <Graph />
-        <BestSeller data={bestSllersData} />
-      </section>
-      <section>
-        {data && <OrdersTable title={"Recent Orders"} data={data} />}
-      </section>
+      {data && dashboardData && bestSllersData ? (
+        <>
+          <section className={styles.section}>
+            <Card
+              title={"Total Orders"}
+              amount={dashboardData?.totalOrders.amount}
+              percentage={dashboardData?.totalOrders.percentage}
+            />
+            <Card
+              title={"Pending Orders"}
+              amount={dashboardData?.pendingOrders.amount}
+              percentage={dashboardData?.pendingOrders.percentage}
+            />
+            <Card
+              title={"Shipped Orders"}
+              amount={dashboardData?.shippedOrders.amount}
+              percentage={dashboardData?.shippedOrders.percentage}
+            />
+          </section>
+          <section className={styles.section}>
+            <Graph />
+            <BestSeller data={bestSllersData} />
+          </section>
+          <section>
+            {data && <OrdersTable title={"Recent Orders"} data={data} />}
+          </section>
+        </>
+      ) : (
+        <div style={{ width: "min-content", margin: "50px auto" }}>
+          <Loader width="200" h color="#000" />
+        </div>
+      )}
     </div>
   );
 }

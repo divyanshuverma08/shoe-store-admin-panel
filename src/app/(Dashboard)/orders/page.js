@@ -6,12 +6,13 @@ import TopBar from "@/components/topBar/topBar";
 import OrdersTable from "@/components/datatables/ordersTable";
 import Pagination from "../products/components/pagination";
 import { order } from "@/lib/services/order";
+import Loader from "@/components/loader/loader";
 
 export default function Orders() {
   const [data, setData] = useState(null);
   const [metadata, setMetadata] = useState(null);
 
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getOrders({ page: page });
@@ -52,21 +53,27 @@ export default function Orders() {
   return (
     <div className={styles.orders}>
       <TopBar page={"Order List"} pageList={["Home", "Order List"]} />
-      {data && <OrdersTable data={data} title={"Orders"} />}
-      <div className={styles.bottom}>
-        {metadata && (
-          <Pagination
-            url={"orders"}
-            currentPage={page}
-            hasNext={metadata?.hasNextPage}
-            hasPrev={metadata?.hasPreviousPage}
-            totalPages={metadata?.totalPages}
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-            handleToNumber={handleToNumber}
-          />
-        )}
-      </div>
+      {data && metadata ? (
+        <>
+          <OrdersTable data={data} title={"Orders"} />
+          <div className={styles.bottom}>
+            <Pagination
+              url={"orders"}
+              currentPage={page}
+              hasNext={metadata?.hasNextPage}
+              hasPrev={metadata?.hasPreviousPage}
+              totalPages={metadata?.totalPages}
+              handleNext={handleNext}
+              handlePrev={handlePrev}
+              handleToNumber={handleToNumber}
+            />
+          </div>
+        </>
+      ) : (
+        <div style={{ width: "min-content", margin: "50px auto" }}>
+          <Loader width="200" h color="#000" />
+        </div>
+      )}
     </div>
   );
 }

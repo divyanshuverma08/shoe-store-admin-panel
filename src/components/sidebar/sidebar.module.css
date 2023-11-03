@@ -7,6 +7,29 @@
     background: var(--fa--white);
 }
 
+.sidebar.mobile.active{
+    left: 0;
+}
+
+.sidebar.mobile{
+    display: block;
+    
+    position: fixed;
+    z-index: 1005;
+    width: 30vw;
+    overflow-y: hidden;
+    left: -30vw;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.closeButton{
+   position: absolute;
+   left: 10px;
+}
+
 .logoContainer{
     display: flex;
     justify-content: center;
@@ -79,4 +102,39 @@
 
 .tab.active p{
     color: var(--white);
+}
+
+@media screen and (max-width: 1200px) {
+
+    .sidebar{
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 1024px) {
+
+    .sidebar.mobile{
+        width: 45vw;  
+        left: -45vw;
+    }
+    
+}
+
+@media screen and (max-width: 768px) {
+
+    .sidebar.mobile{
+        width: 55vw;  
+        left: -55vw;
+    }
+    
+}
+
+@media screen and (max-width: 568px) {
+
+    .sidebar.mobile{
+        width: 100vw;  
+        left: -100vw;
+    }
+    
 }

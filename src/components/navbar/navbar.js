@@ -6,6 +6,7 @@ import ClickAwayListener from "react-click-away-listener";
 import { logout } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import SidebarMobile from "../sidebarMobile/sidebarMobile";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export default function Navbar() {
 
   return (
     <div className={styles.navbar}>
+      <SidebarMobile />
       <button className={styles.button} onClick={() => setOpen(true)}>
         <p className={styles.main}>Admin</p>
         <svg
@@ -41,8 +43,8 @@ export default function Navbar() {
             <div
               className={styles.actions}
               onClick={() => {
-                dispatch(logout())
-                localStorage.setItem("user",null);
+                dispatch(logout());
+                localStorage.setItem("user", null);
                 router.push("/login");
               }}
             >

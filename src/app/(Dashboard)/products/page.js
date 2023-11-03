@@ -1,12 +1,13 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./products.module.css";
 import TopBar from "@/components/topBar/topBar";
 import ProductCard from "./components/productCard";
 import Pagination from "./components/pagination";
 import { products } from "@/lib/services/products";
 import Link from "next/link";
+import Loader from "@/components/loader/loader";
 
 export default function Products() {
   const [data, setData] = useState(null);
@@ -83,30 +84,38 @@ export default function Products() {
           </Link>
         }
       />
-      <div className={styles.productList}>
-        {data?.map((product, i) => (
-          <ProductCard
-            key={product._id}
-            slug={product._id}
-            model={product.model}
-            category={product.category.name}
-            price={product.price}
-            stock={product.stock}
-            totalSold={product.totalSold}
-            image={product.images[0].imageUrl}
+      {data && metadata ? (
+        <>
+          <div className={styles.productList}>
+            {data?.map((product, i) => (
+              <ProductCard
+                key={product._id}
+                slug={product._id}
+                model={product.model}
+                category={product.category.name}
+                price={product.price}
+                stock={product.stock}
+                totalSold={product.totalSold}
+                image={product.images[0].imageUrl}
+              />
+            ))}
+          </div>
+          <Pagination
+            url={"products"}
+            currentPage={page}
+            hasNext={metadata?.hasNextPage}
+            hasPrev={metadata?.hasPreviousPage}
+            totalPages={metadata?.totalPages}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+            handleToNumber={handleToNumber}
           />
-        ))}
-      </div>
-      {metadata && <Pagination
-        url={"products"}
-        currentPage={page}
-        hasNext={metadata?.hasNextPage}
-        hasPrev={metadata?.hasPreviousPage}
-        totalPages={metadata?.totalPages}
-        handleNext={handleNext}
-        handlePrev={handlePrev}
-        handleToNumber={handleToNumber}
-      />}
+        </>
+      ) : (
+        <div style={{ width: "min-content", margin: "50px auto" }}>
+          <Loader width="200" h color="#000" />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,11 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./table.module.css";
 import { useRouter } from "next/navigation";
 
 export default function OrdersTable({ title,data }) {
   const router = useRouter();
+
+  useEffect(()=>{
+    const setMobileTable = function(selector) {
+      if (window.innerWidth > 1024) return false;
+      const tableEl = selector;
+      const thEls = document.getElementsByClassName(`${styles.tableHeader}`);
+      const tdLabels = Array.from(thEls).map(el => el.innerText);
+      tableEl.querySelectorAll('tbody tr').forEach( tr => {
+        Array.from(tr.children).forEach( 
+          (td, ndx) =>  td.setAttribute('label', tdLabels[ndx])
+        );
+      });
+    }
+
+    setMobileTable(document.getElementById("orderTable"))
+  },[])
 
   return (
     <div className={styles.ordersTable}>
@@ -13,7 +29,7 @@ export default function OrdersTable({ title,data }) {
         <p className={styles.title}>{title}</p>
       </div>
       <div className={styles.separator}></div>
-      <table className={styles.table}>
+      <table id="orderTable" className={styles.table}>
         <tbody>
           <tr>
             <th className={styles.tableHeader}>Order ID</th>

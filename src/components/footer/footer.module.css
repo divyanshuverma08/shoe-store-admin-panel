@@ -41,3 +41,24 @@
     font-weight: 600;
     line-height: normal;
 }
+
+@media screen and (max-width: 1200px) {
+
+    .footer{
+        padding-right: 24px;
+    }
+    
+}
+
+@media screen and (max-width: 568px) {
+
+    .footer{
+        margin-top: 50px;
+    }
+
+    .container{
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+}

@@ -12,3 +12,11 @@
 .container{
     padding: 24px 48px 0 24px;
 }
+
+@media screen and (max-width: 1200px) {
+
+    .container{
+        padding: 24px 24px 0 24px;
+    }
+    
+}

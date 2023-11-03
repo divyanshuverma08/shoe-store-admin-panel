@@ -46,3 +46,14 @@
 
     opacity: 0.8;
 }
+
+@media screen and (max-width: 568px) {
+
+    .topBar{
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 24px;
+    }
+    
+}

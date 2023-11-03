@@ -1,35 +1,44 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./sidebar.module.css";
 import { useRouter } from "next/navigation";
 
-export default function Sidebar() {
+export default function Sidebar({ mobile, onClose, open }) {
   const router = useRouter();
 
-  const [route,setRoute] = useState("");
-  
-  useEffect(()=>{
+  const [route, setRoute] = useState("");
+
+  useEffect(() => {
     const path = window.location.pathname;
     setRoute(path.split("/").at(-1));
-  },[]);
+  }, []);
 
   const handleNavigation = (path) => {
     router.push(path);
     setRoute(path.split("/").at(-1));
-  }
+    if(mobile){
+      onClose();
+    }
+  };
 
   return (
-    <div className={styles.sidebar}>
+    <div className={`${styles.sidebar} ${mobile && styles.mobile} ${open && styles.active}`}>
       <div className={styles.logoContainer}>
+        {mobile && <div className={styles.closeButton} onClick={()=>onClose()}>
+          <Image src="/close.svg" alt="close" width={35} height={35} />
+        </div>}
         <div className={styles.logo}>
           <Image src="/logo.svg" fill alt="logo" />
         </div>
       </div>
       <div className={styles.mainContainer}>
         <ul className={styles.tabs}>
-          <li className={`${styles.tab} ${route === '' && styles.active}`} onClick={()=>handleNavigation("/")}>
+          <li
+            className={`${styles.tab} ${route === "" && styles.active}`}
+            onClick={() => handleNavigation("/")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -45,7 +54,10 @@ export default function Sidebar() {
             </svg>
             <p>Dashboard</p>
           </li>
-          <li className={`${styles.tab} ${route === 'products' && styles.active}`} onClick={()=>handleNavigation("/products")}>
+          <li
+            className={`${styles.tab} ${route === "products" && styles.active}`}
+            onClick={() => handleNavigation("/products")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -70,7 +82,10 @@ export default function Sidebar() {
             </svg>
             <p>All Products</p>
           </li>
-          <li className={`${styles.tab} ${route === 'orders' && styles.active}`} onClick={()=>handleNavigation("/orders")}>
+          <li
+            className={`${styles.tab} ${route === "orders" && styles.active}`}
+            onClick={() => handleNavigation("/orders")}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

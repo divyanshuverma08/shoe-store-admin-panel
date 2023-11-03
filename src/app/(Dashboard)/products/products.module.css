@@ -201,3 +201,42 @@
 .right{
     transform: rotate(-90deg);
 }
+
+@media screen and (max-width: 1024px){
+
+    .productCardContainer{
+        width: 49%;
+        padding-bottom: 14px;
+    }
+
+    .productCardContainer:nth-of-type(odd){
+        padding-left: 0;
+        padding-right: 14px;
+    }
+
+    .productCardContainer:nth-of-type(even){
+        padding-left: 14px;
+        padding-right: 0;
+    }
+
+    .pagination button:first-child span,
+    .pagination button:last-child span
+    {
+        display: none;
+    }
+
+    .pagination span{
+        font-size: 1.6rem;
+    }
+
+}
+
+@media screen and (max-width: 568px){
+
+    .productCardContainer:nth-of-type(n){
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+}

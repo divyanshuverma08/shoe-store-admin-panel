@@ -90,3 +90,12 @@
     font-weight: 600;
     line-height: normal;
 }
+
+@media screen and (max-width: 1024px) {
+
+    .bestSeller{
+        flex: content;
+        width: 100%;
+    }
+    
+}

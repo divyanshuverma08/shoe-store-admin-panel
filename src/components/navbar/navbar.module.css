@@ -101,3 +101,24 @@
     letter-spacing: 0.25px;
     text-transform: uppercase;
 }
+
+@media screen and (max-width: 1200px) {
+
+    .navbar{
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+}
+
+@media screen and (max-width: 568px) {
+
+    .navbar{
+        padding: 16px 30px;
+    }
+
+    .modal{
+        bottom: -134px;
+    }
+    
+}

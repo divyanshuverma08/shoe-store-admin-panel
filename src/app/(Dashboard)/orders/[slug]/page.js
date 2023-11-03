@@ -16,7 +16,12 @@ export default function Order({ params }) {
   const [paymentStatus, setPaymentStatus] = useState("default");
 
   useEffect(() => {
-    getOrder();
+    async function fetchData(){
+      const toastId = toast.loading("Loading");
+      await getOrder();
+      toast.dismiss(toastId);
+    }
+    fetchData();
   }, []);
 
   async function getOrder() {
