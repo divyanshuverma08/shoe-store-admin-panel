@@ -140,12 +140,10 @@ export default function NewProduct() {
 
     let images = [];
 
-    await Promise.all(files.map(async (file)=>{
-      const imageUrl = await uploadImages(file);
+    for(var i = 0; i  < files.length; i++){
+      const imageUrl = await uploadImages(files[i]);
       images.push({imageUrl: imageUrl});
-    }));
-
-    images.reverse();
+    }
 
     try {
       const response = await products.addProduct({data:{
